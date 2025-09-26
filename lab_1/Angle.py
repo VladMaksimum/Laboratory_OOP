@@ -7,7 +7,7 @@ class Angle:
     measure : float
 
     def __init__(self, radians : float) -> None:
-        self.measure = radians
+        self.__measure = radians
     
     @classmethod
     def from_degrees(cls, degrees : float) -> 'Angle':
@@ -17,19 +17,19 @@ class Angle:
 
     @property
     def measure_radians(self) -> float:
-        return self.measure
+        return self.__measure
     
     @measure_radians.setter
     def measure_radians(self, value : float) -> None:
-        self.measure = value
+        self.__measure = value
 
     @property
     def measure_degrees(self) -> float:
-        return (self.measure)*180/math.pi
+        return (self.__measure)*180/math.pi
     
     @measure_degrees.setter
     def measure_degrees(self, value : float) -> None:
-        self.measure = value*math.pi/180
+        self.__measure = value*math.pi/180
     
 
     @classmethod
