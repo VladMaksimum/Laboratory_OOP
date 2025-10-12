@@ -6,7 +6,7 @@ class Angle:
 
     measure : float
 
-    def __init__(self, radians : float) -> None:
+    def __init__(self, radians: float) -> None:
         self.__measure = radians
     
     @classmethod
@@ -42,14 +42,14 @@ class Angle:
 
         return measure
 
-    def __eq__(self, value : 'Angle') -> bool:
+    def __eq__(self, value: 'Angle') -> bool:
         angle1 = Angle.del_extra(self)
         angle2 = Angle.del_extra(value)
 
         #print(angle1, angle2)
         return round(angle1, delta) == round(angle2, delta)
     
-    def __ne__(self, value : 'Angle') -> bool:
+    def __ne__(self, value: 'Angle') -> bool:
         return not self == value
     
     def __lt__(self, value : 'Angle') -> bool:
@@ -99,7 +99,7 @@ class Angle:
         if self.measure_radians > value.measure_radians:
             return Angle(self.measure_radians - value.measure_radians)
 
-        return value.measure_radians - self.measure_radians
+        return Angle(value.measure_radians - self.measure_radians)
     
     def __mul__(self, value : float) ->'Angle':
         return Angle(self.measure_radians * value)
