@@ -4,7 +4,7 @@ delta = 14
 
 class Angle:
 
-    measure : float
+    __measure : float
 
     def __init__(self, radians: float) -> None:
         self.__measure = radians
@@ -25,10 +25,10 @@ class Angle:
 
     @property
     def measure_degrees(self) -> float:
-        return (self.__measure)*180/math.pi
+        return (self.__measure) * 180 / math.pi
     
     @measure_degrees.setter
-    def measure_degrees(self, value : float) -> None:
+    def measure_degrees(self, value: float) -> None:
         self.__measure = value*math.pi/180
     
 

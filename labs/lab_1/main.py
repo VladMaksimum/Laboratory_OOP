@@ -10,4 +10,6 @@ angle3 = Angle.from_degrees(30)
 angle4 = Angle.from_degrees(530)
 test1 = AngleRange(angle3, angle4)
 
-print(abs(test))
+
+print(test, test1)
+print(test1.is_part_of(test))
