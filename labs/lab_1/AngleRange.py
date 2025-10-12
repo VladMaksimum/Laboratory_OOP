@@ -1,91 +1,83 @@
 from Angle import Angle
+from Angle import delta
 
 class AngleRange:
 
     start : 'Angle'
     end : 'Angle'
-    including : bool
+    mode: str
 
-    def __init__(self, start : Angle | int | float, end : Angle | int | float) -> None:
-        if type(start) == type(Angle):
-            self.start = start
-        else:
-            self.start = Angle(start)
-        
-        if type(end) == type(Angle):
-            self.end = end
-        else:
-            self.end = Angle(end)
-        
-        self.including = True
-    
-    @classmethod
-    def as_exclusion(cls, start : Angle | int | float, end : Angle | int | float) -> 'AngleRange':
-        return cls(start, end)
+    def __init__(self, start: Angle, end: Angle, mode: str) -> None:
+        self.start = start
+        self.end = end
+        self.mode = mode
 
-    
+
     def __str__(self) -> str:
-        if self.including:
-            return '[' + str(self.start) + '; ' + str(self.end) + ']'
-        
-        return '(' + str(self.start) + '; ' + str(self.end) + ')'
+        return f'{self.mode[0]}{self.start}, {self.end}{self.mode[1]}'
 
     def __repr__(self) -> str:
         return str(self)
     
     def __abs__(self) -> float:
-        return self.end - self.start
+        return self.end.measure_radians - self.start.measure_radians
     
 
 
 
     
-    def __eq__(self, other : 'AngleRange') -> bool:
-        return (self.start == other.start) and (self.end == other.end) and (self.including == other.including)
+    def __eq__(self, other: 'AngleRange') -> bool:
+        return (self.start == other.start) and (self.end == other.end) and (self.mode == other.mode)
     
-    def __ne__(self, other : 'AngleRange') -> bool:
-        return (self.start != other.start) or (self.end != other.end) or (self.including != other.including)
+    def __ne__(self, other: 'AngleRange') -> bool:
+        return not self == other
     
-    def __lt__(self, other : 'AngleRange') -> bool:
+    def __lt__(self, other: 'AngleRange') -> bool:
         if abs(self) < abs(other):
             return True
-        elif abs(self) == abs(other) and other.including and not self.including:
+        elif abs(self) == abs(other) and self.mode < other.mode:
             return True
        
         return False
     
-    def __le__(self, other : 'AngleRange') -> bool:
+    def __le__(self, other: 'AngleRange') -> bool:
         return (self < other) or (self == other)
     
-    def __gt__(self, other : 'AngleRange') -> bool:
+    def __gt__(self, other: 'AngleRange') -> bool:
         if abs(self) > abs(other):
             return True
-        elif abs(self) == abs(other) and not other.including and self.including:
+        elif abs(self) == abs(other) and self.mode > other.mode:
             return True
        
         return False
     
-    def __ge__(self, other : 'AngleRange') -> bool:
+    def __ge__(self, other: 'AngleRange') -> bool:
         return (self > other) or (self == other)
     
 
 
 
-    def is_part_of(self, other : 'AngleRange') -> bool:
-        if other.including and self.start >= other.start and self.end <=other.end:
+    def is_part_of(self, other: 'AngleRange') -> bool:
+        if self.mode < other.mode and round(self.start.measure_radians, delta) <= round(other.start.measure_radians, delta)\
+        and round(self.end.measure_radians, delta) >= round(other.end.measure_radians, delta):
             return True
-        elif self.including and self.start > other.start and self.end <other.end:
+        elif self.mode >= other.mode and round(self.start.measure_radians, delta) < round(other.start.measure_radians, delta)\
+        and round(self.end.measure_radians, delta) > round(other.end.measure_radians, delta):
             return True
         
-        return self.start >= other.start and self.end <=other.end
+        return False
+        
+        
     
-    def is_involved(self, angle : 'Angle') -> bool:
-        print(type(self.start), type(self.end), type(angle))
-        if self.including:
-            print((self.start <= angle), (self.end >= angle))
-            return (self.start <= angle) and (self.end >= angle)
+    def is_involved(self, angle: 'Angle') -> bool:
+        if round(self.start.measure_radians, delta) < round(angle.measure_radians, delta) \
+            and round(self.end.measure_radians, delta) > round(angle.measure_radians, delta):
+            return True
         
-        return (self.start < angle) and (self.end > angle)
+        elif (angle == self.start and self.mode[0] == '[') or (angle == self.end and self.mode[1] == ']'):
+            return True
+        
+        return False
 
     
     

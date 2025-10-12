@@ -4,13 +4,13 @@ delta = 14
 
 class Angle:
 
-    __measure : float
+    __measure: float
 
     def __init__(self, radians: float) -> None:
         self.__measure = radians
     
     @classmethod
-    def from_degrees(cls, degrees : float) -> 'Angle':
+    def from_degrees(cls, degrees: float) -> 'Angle':
         return cls(degrees * math.pi/180)
     
 
@@ -20,7 +20,7 @@ class Angle:
         return self.__measure
     
     @measure_radians.setter
-    def measure_radians(self, value : float) -> None:
+    def measure_radians(self, value: float) -> None:
         self.__measure = value
 
     @property
@@ -29,11 +29,11 @@ class Angle:
     
     @measure_degrees.setter
     def measure_degrees(self, value: float) -> None:
-        self.__measure = value*math.pi/180
+        self.__measure = value * math.pi / 180
     
 
     @classmethod
-    def del_extra(self, angle : 'Angle') -> float:
+    def del_extra(self, angle: 'Angle') -> float:
         measure = float(angle.measure_radians)
 
         while measure > 2 * math.pi:
@@ -52,24 +52,24 @@ class Angle:
     def __ne__(self, value: 'Angle') -> bool:
         return not self == value
     
-    def __lt__(self, value : 'Angle') -> bool:
+    def __lt__(self, value: 'Angle') -> bool:
         angle1 = Angle.del_extra(self)
         angle2 = Angle.del_extra(value)
 
 
         return round(angle1, delta) < round(angle2, delta)
     
-    def __le__(self, value : 'Angle') -> bool:
+    def __le__(self, value: 'Angle') -> bool:
         return self < value or self == value
     
-    def __gt__(self, value : 'Angle') -> bool:
+    def __gt__(self, value: 'Angle') -> bool:
         #print("yes im dumb")
         angle1 = Angle.del_extra(self)
         angle2 = Angle.del_extra(value)
 
         return round(angle1, delta) > round(angle2, delta)
     
-    def __ge__(self, value : 'Angle') -> bool:
+    def __ge__(self, value: 'Angle') -> bool:
         return self > value or self == value
     
 
@@ -83,7 +83,7 @@ class Angle:
     def __str__(self) -> str:
         return str(self.measure_radians)
     
-    def __repr__(self) ->str:
+    def __repr__(self) -> str:
         return str(self)
     
 
@@ -95,16 +95,16 @@ class Angle:
         else:
             raise TypeError
     
-    def __sub__(self, value : 'Angle') -> 'Angle':
+    def __sub__(self, value: 'Angle') -> 'Angle':
         if self.measure_radians > value.measure_radians:
             return Angle(self.measure_radians - value.measure_radians)
 
         return Angle(value.measure_radians - self.measure_radians)
     
-    def __mul__(self, value : float) ->'Angle':
+    def __mul__(self, value: float) -> 'Angle':
         return Angle(self.measure_radians * value)
     
-    def __truediv__(self, value : float) ->'Angle':
+    def __truediv__(self, value: float) -> 'Angle':
         return Angle(self.measure_radians / value)
     
 
