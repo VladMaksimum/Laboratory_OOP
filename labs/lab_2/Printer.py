@@ -1,36 +1,58 @@
 from Colors import Colors
-from typing import Tuple, List
+from typing import Tuple
+
+HEIGHT = 5
+LETTETS = []
+with open("labs/lab_2/small_fonts.txt") as file:
+    while True:
+        lines = [file.readline() for _ in range(5)]
+        LETTETS.append(lines)
+
+        if not lines[0]:
+            break
+
 
 class Printer:
-    letters: List[List[str]]
-    height: int
     color: Colors
     position: Tuple[int, int]
     symbol: str
-    fonts_path: str = "labs/lab_2/small_fonts.txt"
 
 
     def __init__(self, color: Colors, position: Tuple[int, int], symbol: str) -> None:
-        self.letters = []
         self.color = color
         self.position = position
         self.symbol = symbol
-
-        with open(self.fonts_path) as file:
-            self.height = int(file.readline())
-            for _ in range(26):
-                self.letters.append([file.readline().replace("*", self.symbol) for i in range(self.height)])
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, type, value, traceback):
+        return
 
 
     @classmethod
-    def print(self, text: str, color: Colors, position: Tuple[int, int], symbol: str) -> None:
+    def print(self, text: str, color: Colors , position: Tuple[int, int], symbol: str) -> None:
         text = text.lower().strip()
-        lines = [] * self.height
+        lines: list[str] = [''  for _ in range(HEIGHT + position[1] - 1)]
+        
+        spec_letters = []
+
+        if symbol == "*":
+            spec_letters = LETTETS
+        else:
+            for font in LETTETS:
+                font = [font[i].replace("*", symbol) for i in range(HEIGHT)]
+                spec_letters.append(font)
+
 
         for letter in text:
-            for i in range(self.height):
-                lines[i] += self.letters[ord(letter)][i][:-2:] + "  "
+            for i in range(HEIGHT):
+                lines[i + position[1] - 1] += (' ' * (position[0] - 1) + color.value + spec_letters[ord(letter) - 97][i][:-1:] \
+                    + "  " + Colors.DEFAULT.value)
+
         
 
-        map(print, lines)
+        for line in lines:
+            print(line)
+    
             
