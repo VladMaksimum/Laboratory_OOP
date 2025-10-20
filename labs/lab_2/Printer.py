@@ -1,5 +1,5 @@
 from Colors import Colors
-from typing import Tuple
+from typing import Tuple, overload
 
 HEIGHT = 5
 LETTETS = []
@@ -28,10 +28,9 @@ class Printer:
     
     def __exit__(self, type, value, traceback):
         return
-
-
+    
     @classmethod
-    def print(self, text: str, color: Colors , position: Tuple[int, int], symbol: str) -> None:
+    def static_print(cls, text: str, color: Colors , position: Tuple[int, int], symbol: str) -> None:
         text = text.lower().strip()
         lines: list[str] = [''  for _ in range(HEIGHT + position[1] - 1)]
         
@@ -55,4 +54,27 @@ class Printer:
         for line in lines:
             print(line)
     
-            
+    def print(self, text: str) -> None:
+        text = text.lower().strip()
+        lines: list[str] = [''  for _ in range(HEIGHT + self.position[1] - 1)]
+        
+        spec_letters = []
+
+        if self.symbol == "*":
+            spec_letters = LETTETS
+        else:
+            for font in LETTETS:
+                font = [font[i].replace("*", self.symbol) for i in range(HEIGHT)]
+                spec_letters.append(font)
+
+
+        for letter in text:
+            for i in range(HEIGHT):
+                lines[i + self.position[1] - 1] += (' ' * (self.position[0] - 1) + self.color.value + spec_letters[ord(letter) - 97][i][:-1:] \
+                    + "  " + Colors.DEFAULT.value)
+
+        
+
+        for line in lines:
+            print(line)
+
