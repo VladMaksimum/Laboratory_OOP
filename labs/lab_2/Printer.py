@@ -1,11 +1,13 @@
 from Colors import Colors
 from typing import Tuple, overload
 
-HEIGHT = 5
+HEIGHT = 7
+FONT_SMALL = "labs/lab_2/small_fonts.txt"
+FONT_BIG = "labs/lab_2/big_fonts.txt"
 LETTETS = []
-with open("labs/lab_2/small_fonts.txt") as file:
+with open(FONT_BIG) as file:
     while True:
-        lines = [file.readline() for _ in range(5)]
+        lines = [file.readline() for _ in range(HEIGHT)]
         LETTETS.append(lines)
 
         if not lines[0]:
