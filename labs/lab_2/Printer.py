@@ -1,11 +1,11 @@
 from Colors import Colors
 from typing import Tuple, overload
 
-HEIGHT = 7
+HEIGHT = 5
 FONT_SMALL = "labs/lab_2/small_fonts.txt"
 FONT_BIG = "labs/lab_2/big_fonts.txt"
 LETTETS = []
-with open(FONT_BIG) as file:
+with open(FONT_SMALL) as file:
     while True:
         lines = [file.readline() for _ in range(HEIGHT)]
         LETTETS.append(lines)
@@ -34,7 +34,7 @@ class Printer:
     @classmethod
     def static_print(cls, text: str, color: Colors , position: Tuple[int, int], symbol: str) -> None:
         text = text.lower().strip()
-        lines: list[str] = [''  for _ in range(HEIGHT + position[1] - 1)]
+        lines: list[str] = [''  for _ in range(HEIGHT + position[1])]
         
         spec_letters = []
 
@@ -47,9 +47,15 @@ class Printer:
 
 
         for letter in text:
+            is_first = True
             for i in range(HEIGHT):
-                lines[i + position[1] - 1] += (' ' * (position[0] - 1) + color.value + spec_letters[ord(letter) - 97][i][:-1:] \
-                    + "  " + Colors.DEFAULT.value)
+                if is_first:
+                    lines[i + position[1]] += (' ' * (position[0]) + color.value + spec_letters[ord(letter) - 97][i][:-1:] \
+                        + "  " + Colors.DEFAULT.value)
+                    is_first = False
+                else:
+                    lines[i + position[1]] += (color.value + spec_letters[ord(letter) - 97][i][:-1:] \
+                        + "  " + Colors.DEFAULT.value)
 
         
 
@@ -58,7 +64,7 @@ class Printer:
     
     def print(self, text: str) -> None:
         text = text.lower().strip()
-        lines: list[str] = [''  for _ in range(HEIGHT + self.position[1] - 1)]
+        lines: list[str] = [''  for _ in range(HEIGHT + self.position[1])]
         
         spec_letters = []
 
@@ -72,7 +78,7 @@ class Printer:
 
         for letter in text:
             for i in range(HEIGHT):
-                lines[i + self.position[1] - 1] += (' ' * (self.position[0] - 1) + self.color.value + spec_letters[ord(letter) - 97][i][:-1:] \
+                lines[i + self.position[1]] += (' ' * (self.position[0]) + self.color.value + spec_letters[ord(letter) - 97][i][:-1:] \
                     + "  " + Colors.DEFAULT.value)
 
         
