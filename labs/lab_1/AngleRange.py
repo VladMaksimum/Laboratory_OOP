@@ -60,16 +60,64 @@ class AngleRange:
     def is_part_of(self, other: 'AngleRange') -> bool:
         if self == other:
             return True
-        if self.mode[0] <= other.mode[0] and self.mode[1] <= other.mode[1] \
-        and round(self.start.measure_radians, delta) <= round(other.start.measure_radians, delta)\
-        and round(self.end.measure_radians, delta) >= round(other.end.measure_radians, delta):
-            return True
-        elif self.mode[0] > other.mode[0] and self.mode[0] > other.mode[0] \
-        and round(self.start.measure_radians, delta) < round(other.start.measure_radians, delta)\
-        and round(self.end.measure_radians, delta) > round(other.end.measure_radians, delta):
-            return True
-        
-        return False
+    
+        match self.mode:
+            case "[]":
+                match other.mode:
+                    case "[]":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "[)":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) < round(other.end.measure_radians, delta))
+                    case "(]":
+                        return (round(self.start.measure_radians, delta) > round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "()":
+                        return (round(self.start.measure_radians, delta) > round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) < round(other.end.measure_radians, delta))
+            case "[)":
+                match other.mode:
+                    case "[]":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "[)":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "(]":
+                        return (round(self.start.measure_radians, delta) > round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "()":
+                        return (round(self.start.measure_radians, delta) > round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+            case "(]":
+                match other.mode:
+                    case "[]":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "[)":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) < round(other.end.measure_radians, delta))
+                    case "(]":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "()":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) < round(other.end.measure_radians, delta))
+            case "()":
+                match other.mode:
+                    case "[]":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "[)":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "(]":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
+                    case "()":
+                        return (round(self.start.measure_radians, delta) >= round(other.start.measure_radians, delta)\
+                            and round(self.end.measure_radians, delta) <= round(other.end.measure_radians, delta))
         
         
     

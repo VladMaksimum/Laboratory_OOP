@@ -27,5 +27,8 @@ print(int(angle2), "in", test2, "?", test2.is_involved(angle2))
 print(int(angle2), "in", test1, "?", test1.is_involved(angle2))
 
 test4 = AngleRange(angle1, angle2, '(]')
-print(test4, "is part of", test2, "?", test4.is_part_of(test1))
+print(test4, "is part of", test2, "?", test4.is_part_of(test2))
+
+test5 = AngleRange(Angle.from_degrees(60), Angle.from_degrees(90), "()")
+print(test5, "is part of", test1, "?", test5.is_part_of(test1))
 
