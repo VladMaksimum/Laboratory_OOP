@@ -14,7 +14,7 @@ class AngleRange:
 
 
     def __str__(self) -> str:
-        return f'{self.mode[0]}{self.start}, {self.end}{self.mode[1]}'
+        return f'{self.mode[0]}{int(self.start)}, {int(self.end)}{self.mode[1]}'
 
     def __repr__(self) -> str:
         return str(self)
@@ -58,10 +58,14 @@ class AngleRange:
 
 
     def is_part_of(self, other: 'AngleRange') -> bool:
-        if self.mode < other.mode and round(self.start.measure_radians, delta) <= round(other.start.measure_radians, delta)\
+        if self == other:
+            return True
+        if self.mode[0] <= other.mode[0] and self.mode[1] <= other.mode[1] \
+        and round(self.start.measure_radians, delta) <= round(other.start.measure_radians, delta)\
         and round(self.end.measure_radians, delta) >= round(other.end.measure_radians, delta):
             return True
-        elif self.mode >= other.mode and round(self.start.measure_radians, delta) < round(other.start.measure_radians, delta)\
+        elif self.mode[0] > other.mode[0] and self.mode[0] > other.mode[0] \
+        and round(self.start.measure_radians, delta) < round(other.start.measure_radians, delta)\
         and round(self.end.measure_radians, delta) > round(other.end.measure_radians, delta):
             return True
         

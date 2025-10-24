@@ -1,29 +1,34 @@
 from Colors import Colors
 from typing import Tuple, overload
 
-HEIGHT = 5
-FONT_SMALL = "labs/lab_2/small_fonts.txt"
-FONT_BIG = "labs/lab_2/big_fonts.txt"
-LETTETS = []
-with open(FONT_SMALL) as file:
-    while True:
-        lines = [file.readline() for _ in range(HEIGHT)]
-        LETTETS.append(lines)
-
-        if not lines[0]:
-            break
-
-
 class Printer:
     color: Colors
     position: Tuple[int, int]
     symbol: str
 
 
-    def __init__(self, color: Colors, position: Tuple[int, int], symbol: str) -> None:
+    def __init__(self, color: Colors, position: Tuple[int, int], symbol: str, font_path: str) -> None:
         self.color = color
         self.position = position
         self.symbol = symbol
+        self.font_path = font_path
+    
+    @classmethod
+    def load_font(self, font_path: str) -> list[list[str]]:
+        letters = []
+
+        with open(font_path) as file:
+            height = int(file.readline())
+
+            while True:
+                lines = [file.readline() for _ in range(height)]
+                letters.append(lines)
+
+                if not lines[0]:
+                    break
+        
+        return letters
+
     
     def __enter__(self):
         return self
@@ -32,28 +37,37 @@ class Printer:
         return
     
     @classmethod
-    def static_print(cls, text: str, color: Colors , position: Tuple[int, int], symbol: str) -> None:
+    def static_print(cls, text: str, color: Colors , position: Tuple[int, int], symbol: str, font_path: str) -> None:
+        letters = Printer.load_font(font_path)
+        height = len(letters[0])
+
         text = text.lower().strip()
-        lines: list[str] = [''  for _ in range(HEIGHT + position[1])]
+        lines: list[str] = [''  for _ in range(height + position[1])]
         
         spec_letters = []
 
         if symbol == "*":
-            spec_letters = LETTETS
+            spec_letters = letters
         else:
-            for font in LETTETS:
-                font = [font[i].replace("*", symbol) for i in range(HEIGHT)]
+            for font in letters:
+                font = [font[i].replace("*", symbol) for i in range(height)]
                 spec_letters.append(font)
 
-
+        is_first = True
         for letter in text:
-            is_first = True
-            for i in range(HEIGHT):
-                if is_first:
+            if is_first:
+                for i in range(height):
+                    if letter == " ":
+                        lines[i + position[1]] += (' ' * 5)
+                        continue
                     lines[i + position[1]] += (' ' * (position[0]) + color.value + spec_letters[ord(letter) - 97][i][:-1:] \
                         + "  " + Colors.DEFAULT.value)
                     is_first = False
-                else:
+            else:
+                for i in range(height):
+                    if letter == " ":
+                        lines[i + position[1]] += (' ' * 5)
+                        continue
                     lines[i + position[1]] += (color.value + spec_letters[ord(letter) - 97][i][:-1:] \
                         + "  " + Colors.DEFAULT.value)
 
@@ -63,26 +77,33 @@ class Printer:
             print(line)
     
     def print(self, text: str) -> None:
+        letters = Printer.load_font(self.font_path)
+        height = len(letters[0])
+
         text = text.lower().strip()
-        lines: list[str] = [''  for _ in range(HEIGHT + self.position[1])]
+        lines: list[str] = [''  for _ in range(height + self.position[1])]
         
         spec_letters = []
 
         if self.symbol == "*":
-            spec_letters = LETTETS
+            spec_letters = letters
         else:
-            for font in LETTETS:
-                font = [font[i].replace("*", self.symbol) for i in range(HEIGHT)]
+            for font in letters:
+                font = [font[i].replace("*", self.symbol) for i in range(height)]
                 spec_letters.append(font)
 
-
+        is_first = True
         for letter in text:
-            for i in range(HEIGHT):
-                lines[i + self.position[1]] += (' ' * (self.position[0]) + self.color.value + spec_letters[ord(letter) - 97][i][:-1:] \
-                    + "  " + Colors.DEFAULT.value)
-
-        
-
+            if is_first:
+                for i in range(height):
+                    lines[i + self.position[1]] += (' ' * (self.position[0]) + self.color.value + spec_letters[ord(letter)\
+                        - 97][i][:-1:] + "  " + Colors.DEFAULT.value)
+                    is_first = False
+            else:
+                for i in range(height):
+                    lines[i + self.position[1]] += (self.color.value + spec_letters[ord(letter) - 97][i][:-1:] \
+                        + "  " + Colors.DEFAULT.value)
+    
         for line in lines:
             print(line)
 

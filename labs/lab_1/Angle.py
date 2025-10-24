@@ -1,6 +1,7 @@
 import math
+from decimal import Decimal
 
-delta = 14
+delta = 13
 
 class Angle:
 
@@ -81,7 +82,7 @@ class Angle:
         return int(round(self.measure_degrees))
     
     def __str__(self) -> str:
-        return str(self.measure_radians)
+        return f'pi * {self.measure_radians/math.pi}'
     
     def __repr__(self) -> str:
         return str(self)
