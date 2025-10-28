@@ -42,6 +42,17 @@ class Angle:
             measure -= 2 * math.pi
 
         return measure
+    
+    def equal(self, value: 'Angle') -> bool:
+
+        #print(angle1, angle2)
+        return round(self.measure_radians, delta) == round(value.measure_radians, delta)
+    
+    def more(self, value: 'Angle') -> bool:
+        return round(self.measure_radians, delta) > round(value.measure_radians, delta)
+    
+    def less(self, value: 'Angle') -> bool:
+        return round(self.measure_radians, delta) < round(value.measure_radians, delta)
 
     def __eq__(self, value: 'Angle') -> bool:
         angle1 = Angle.del_extra(self)
