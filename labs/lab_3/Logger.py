@@ -1,6 +1,6 @@
-from lab_3.Filters.ILogFilter import ILogFilter
-from lab_3.Formatters.ILogFormatter import ILogFormatter
-from lab_3.Handlers.ILogHandlers import ILogHandlers
+from Filters.ILogFilter import ILogFilter
+from Formatters.ILogFormatter import ILogFormatter
+from Handlers.ILogHandler import ILogHandler
 from LogLevel import LogLevel
 
 class Logger:

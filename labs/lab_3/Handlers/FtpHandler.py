@@ -1,5 +1,5 @@
-from labs.lab_3.LogLevel import LogLevel
-from ILogHandler import ILogHandler
+from LogLevel import LogLevel
+from Handlers.ILogHandler import ILogHandler
 
 class FtpHandler(ILogHandler):
     def __init__(self, server: str, username: str, password: str, message_file: str) -> None:

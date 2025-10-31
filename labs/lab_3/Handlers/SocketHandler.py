@@ -1,5 +1,5 @@
-from labs.lab_3.LogLevel import LogLevel
-from ILogHandler import ILogHandler
+from LogLevel import LogLevel
+from Handlers.ILogHandler import ILogHandler
 
 class SocketHandler(ILogHandler):
     def __init__(self, host: str, port: int) -> None:

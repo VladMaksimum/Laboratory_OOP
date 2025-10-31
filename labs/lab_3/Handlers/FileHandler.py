@@ -1,5 +1,5 @@
-from labs.lab_3.LogLevel import LogLevel
-from ILogHandler import ILogHandler
+from LogLevel import LogLevel
+from Handlers.ILogHandler import ILogHandler
 
 class FileHandler(ILogHandler):
     def __init__(self, file_path: str) -> None:
@@ -7,4 +7,4 @@ class FileHandler(ILogHandler):
 
     def handle(self, log_level: LogLevel, text: str) -> None:
         with open(self.file_path, "a") as file:
-            file.write(text)
+            file.write(text + '\n')

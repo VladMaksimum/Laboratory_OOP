@@ -1,6 +1,6 @@
 import re
-from ILogFilter import ILogFilter
-from labs.lab_3.LogLevel import LogLevel
+from Filters.ILogFilter import ILogFilter
+from LogLevel import LogLevel
 
 class ReLogFilter(ILogFilter):
     def __init__(self, pattern: str) -> None:
