@@ -8,10 +8,12 @@ class SocketHandler(ILogHandler):
 
     def handle(self, log_level: LogLevel, text: str) -> None:
         import socket
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((self.host, self.port))
+            
+            s.sendall(text.encode('utf-8'))
 
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((self.host, self.port))
-        
-        s.sendall(text.encode('utf-8'))
-
-        s.close()
+            s.close()
+        except:
+            return

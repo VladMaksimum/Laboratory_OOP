@@ -6,5 +6,8 @@ class SyslogHandler(ILogHandler):
         self.log_file = log_file
 
     def handle(self, log_level: LogLevel, text: str) -> None:
-        with open(self.log_file, "a") as file:
-            file.write(text + '\n')
+        try:
+            with open(self.log_file, "a") as file:
+                file.write(text + '\n')
+        except:
+            return

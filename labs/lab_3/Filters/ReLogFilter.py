@@ -7,6 +7,11 @@ class ReLogFilter(ILogFilter):
         self.pattern = pattern
 
     def match(self, log_level: LogLevel, text: str) -> bool:
+        try:
+            re.compile(self.pattern)
+        except:
+            return
+
         if re.fullmatch(self.pattern, text) == None:
             return False
         

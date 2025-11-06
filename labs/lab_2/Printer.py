@@ -1,17 +1,20 @@
 from Colors import Colors
 from typing import Tuple, overload
 
+FIRST_LETTER_ASCII_CODE = 97
+
 class Printer:
     color: Colors
     position: Tuple[int, int]
     symbol: str
 
 
-    def __init__(self, color: Colors, position: Tuple[int, int], symbol: str, font_path: str) -> None:
+    def __init__(self, color: Colors, position: Tuple[int, int], symbol: str, font_path: str, interletters_space: int) -> None:
         self.color = color
         self.position = position
         self.symbol = symbol
         self.font_path = font_path
+        self.interletters_space = interletters_space
     
     @classmethod
     def load_font(self, font_path: str) -> list[list[str]]:
@@ -37,7 +40,7 @@ class Printer:
         return
     
     @classmethod
-    def static_print(cls, text: str, color: Colors , position: Tuple[int, int], symbol: str, font_path: str) -> None:
+    def static_print(cls, text: str, color: Colors , position: Tuple[int, int], symbol: str, font_path: str, interletters_space: int) -> None:
         letters = Printer.load_font(font_path)
         height = len(letters[0])
 
@@ -58,18 +61,18 @@ class Printer:
             if is_first:
                 for i in range(height):
                     if letter == " ":
-                        lines[i + position[1]] += (' ' * 5)
+                        lines[i + position[1]] += (' ' * height)
                         continue
-                    lines[i + position[1]] += (' ' * (position[0]) + color.value + spec_letters[ord(letter) - 97][i][:-1:] \
-                        + "  " + Colors.DEFAULT.value)
+                    lines[i + position[1]] += (' ' * (position[0]) + color.value + spec_letters[ord(letter) - FIRST_LETTER_ASCII_CODE][i][:-1:] \
+                        + " " * interletters_space + Colors.DEFAULT.value)
                     is_first = False
             else:
                 for i in range(height):
                     if letter == " ":
-                        lines[i + position[1]] += (' ' * 5)
+                        lines[i + position[1]] += (' ' * height)
                         continue
-                    lines[i + position[1]] += (color.value + spec_letters[ord(letter) - 97][i][:-1:] \
-                        + "  " + Colors.DEFAULT.value)
+                    lines[i + position[1]] += (color.value + spec_letters[ord(letter) - FIRST_LETTER_ASCII_CODE][i][:-1:] \
+                        + " " * interletters_space + Colors.DEFAULT.value)
 
         
 
@@ -97,12 +100,12 @@ class Printer:
             if is_first:
                 for i in range(height):
                     lines[i + self.position[1]] += (' ' * (self.position[0]) + self.color.value + spec_letters[ord(letter)\
-                        - 97][i][:-1:] + "  " + Colors.DEFAULT.value)
+                        - FIRST_LETTER_ASCII_CODE][i][:-1:] + " " * self.interletters_space + Colors.DEFAULT.value)
                     is_first = False
             else:
                 for i in range(height):
-                    lines[i + self.position[1]] += (self.color.value + spec_letters[ord(letter) - 97][i][:-1:] \
-                        + "  " + Colors.DEFAULT.value)
+                    lines[i + self.position[1]] += (self.color.value + spec_letters[ord(letter) - FIRST_LETTER_ASCII_CODE][i][:-1:] \
+                        + " " * self.interletters_space + Colors.DEFAULT.value)
     
         for line in lines:
             print(line)

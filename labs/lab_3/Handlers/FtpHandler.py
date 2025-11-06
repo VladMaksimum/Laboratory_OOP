@@ -11,15 +11,17 @@ class FtpHandler(ILogHandler):
     def handle(self, log_level: LogLevel, text: str) -> None:
         from ftplib import FTP
 
-        with open(self.message_file, "w") as file:
-            file.write(text)
-        
+        try:
+            with open(self.message_file, "w") as file:
+                file.write(text)
 
-        with open(self.message_file, 'rb') as file:
-            
-            ftp = FTP(self.server)
+            with open(self.message_file, 'rb') as file:
+                ftp = FTP(self.server)
 
-            ftp.login(self.usernamer, self.password)
-            ftp.storbinary(f"STOR {self.message_file}", file)
+                ftp.login(self.usernamer, self.password)
+                ftp.storbinary(f"STOR {self.message_file}", file)
 
-            ftp.quit()
+                ftp.quit()
+
+        except:
+            return
