@@ -1,0 +1,11 @@
+from typing import TypeVar, Generic
+from abc import ABC, abstractmethod
+
+TEventArgs = TypeVar("TEventArgs")
+T = TypeVar("T")
+
+class EventHandler(Generic[TEventArgs], ABC):
+    @abstractmethod
+    def handle(self, sender: object, args: TEventArgs) -> bool:
+        ...
+
