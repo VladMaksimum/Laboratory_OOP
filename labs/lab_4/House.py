@@ -9,6 +9,7 @@ class House:
         self._city = city
         self._street = street
         self._number = number
+        self._observer = Event([])
     
     def __str__(self) -> str:
         return self.__class__.__name__
@@ -22,8 +23,8 @@ class House:
         old_value = self._city
         self._city = new_city
 
-        Event([PropertyChangingEventHandler()]).invoke(self, PropertyChangingEventArgs("_city", old_value, new_city, False))
-        Event([PropetryChangedEventHandler()]).invoke(self, PropertyChangedEventArgs("_city"))
+        self._observer.invoke(self, PropertyChangingEventArgs("_city", old_value, new_city, False))
+        self._observer.invoke(self, PropertyChangedEventArgs("_city"))
     
     @property
     def street(self) -> str:
@@ -34,8 +35,8 @@ class House:
         old_value = self._street
         self._street = new_street
 
-        Event([PropertyChangingEventHandler()]).invoke(self, PropertyChangingEventArgs("_street", old_value, new_street, True))
-        Event([PropetryChangedEventHandler()]).invoke(self, PropertyChangedEventArgs("_street"))
+        self._observer.invoke(self, PropertyChangingEventArgs("_street", old_value, new_street, True))
+        self._observer.invoke(self, PropertyChangedEventArgs("_street"))
     
     @property
     def number(self) -> int:
@@ -46,7 +47,7 @@ class House:
         old_value = self._number
         self._number = new_number
 
-        Event([PropertyChangingEventHandler()]).invoke(self, PropertyChangingEventArgs("_number", old_value, new_number, True))
-        Event([PropetryChangedEventHandler()]).invoke(self, PropertyChangedEventArgs("_number"))
+        self._observer.invoke(self, PropertyChangingEventArgs("_number", old_value, new_number, True))
+        self._observer.invoke(self, PropertyChangedEventArgs("_number"))
     
     

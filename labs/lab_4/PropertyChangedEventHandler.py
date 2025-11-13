@@ -1,7 +1,10 @@
 from EventHandler import EventHandler
 from PropertyChangedEventArgs import PropertyChangedEventArgs
+from typing import Generic, TypeVar
 
-class PropetryChangedEventHandler(EventHandler[PropertyChangedEventArgs]):
-    def handle(self, sender: object, args: PropertyChangedEventArgs) -> bool:
-        print(f'In object {sender} someone tried to change property {args.prop_name}')
-        return True
+TEventArgs = TypeVar("TEventArgs")
+
+class PropetryChangedEventHandler(Generic[TEventArgs], EventHandler[PropertyChangedEventArgs]):
+    def handle(self, sender: object, args: PropertyChangedEventArgs) -> None:
+        if isinstance(args, PropertyChangedEventArgs):
+            print(f'In object {sender} someone tried to change property {args.prop_name}')

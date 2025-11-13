@@ -10,6 +10,7 @@ class Student:
         self._name = name
         self._study_profile = study_profile
         self._completed_oop_labs = completed_oop_labs
+        self._observer = Event([])
     
     def __str__(self) -> str:
         return self.__class__.__name__
@@ -23,8 +24,8 @@ class Student:
         old_value = self._name
         self._name = new_name
 
-        Event([PropertyChangingEventHandler()]).invoke(self, PropertyChangingEventArgs("_name", old_value, new_name, False))
-        Event([PropetryChangedEventHandler()]).invoke(self, PropertyChangedEventArgs("_name"))
+        self._observer.invoke(self, PropertyChangingEventArgs("_name", old_value, new_name, False))
+        self._observer.invoke(self, PropertyChangedEventArgs("_name"))
     
     @property
     def profile(self) -> str:
@@ -35,9 +36,9 @@ class Student:
         old_value = self._study_profile
         self._study_profile = new_profile
 
-        Event([PropertyChangingEventHandler()]).invoke(self, PropertyChangingEventArgs("_study_profile", old_value, \
+        self._observer.invoke(self, PropertyChangingEventArgs("_study_profile", old_value, \
                                                                                        new_profile, True))
-        Event([PropetryChangedEventHandler()]).invoke(self, PropertyChangedEventArgs("_study_profile"))
+        self._observer.invoke(self, PropertyChangedEventArgs("_study_profile"))
     
     @property
     def labs(self) -> int:
@@ -48,6 +49,6 @@ class Student:
         old_value = self._completed_oop_labs
         self._completed_oop_labs = new_quantity
 
-        Event([PropertyChangingEventHandler()]).invoke(self, PropertyChangingEventArgs("_completed_oop_labs", old_value, \
+        self._observer.invoke(self, PropertyChangingEventArgs("_completed_oop_labs", old_value, \
                                                                                        new_quantity, True))
-        Event([PropetryChangedEventHandler()]).invoke(self, PropertyChangedEventArgs("_completed_oop_labs"))
+        self._observer.invoke(self, PropertyChangedEventArgs("_completed_oop_labs"))

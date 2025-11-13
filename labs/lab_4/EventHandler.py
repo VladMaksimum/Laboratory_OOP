@@ -6,6 +6,6 @@ T = TypeVar("T")
 
 class EventHandler(Generic[TEventArgs], ABC):
     @abstractmethod
-    def handle(self, sender: object, args: TEventArgs) -> bool:
+    def handle(self, sender: object, args: TEventArgs) -> None:
         ...
 
