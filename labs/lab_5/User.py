@@ -9,7 +9,7 @@ class User:
     login: str
     password: str
     address: str
-    email: str = None
+    email: str | None = None
 
     def __lt__(self, other: Self) -> bool:
         return self.name < other.name
@@ -17,6 +17,5 @@ class User:
     def __gt__(self, other: Self) -> bool:
         return self.name > other.name
     
-
 
 
