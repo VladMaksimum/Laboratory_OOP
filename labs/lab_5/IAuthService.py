@@ -16,5 +16,5 @@ class IAuthService(ABC):
         ...
     
     @abstractmethod
-    def current_user(self) -> User | None:
+    def current_user(self, user: User) -> None:
         ...
