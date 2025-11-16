@@ -7,9 +7,9 @@ T = TypeVar("T")
 
 
 class DataRepository(Generic[T], IDataRepository[T]):
-    def __init__(self, rep_path: str, type_name: str) -> None:
+    def __init__(self, rep_path: str, data_type: type) -> None:
         self._rep_path = rep_path
-        self._type_name = type_name
+        self._data_type = data_type
 
     def get_all(self) -> Sequence[T]:
         folder  = Path(self._rep_path)
@@ -17,7 +17,7 @@ class DataRepository(Generic[T], IDataRepository[T]):
 
         for file in list(map(str, folder.glob("*"))):
             with open(file) as atributes:
-                obj = type(self._type_name, (), json.load(atributes))
+                obj = self._data_type(**json.load(atributes))
                 data.append(obj)
         
         return data

@@ -5,7 +5,7 @@ import json
 
 class UserRepository(DataRepository[User]):
     def __init__(self, rep_path):
-        super().__init__(rep_path, "User")
+        super().__init__(rep_path, User)
 
     def get_by_login(self, login: str) -> User | None:
         data = self.get_all()

@@ -18,7 +18,7 @@ print(repo_unsgn.get_all()[0].login)
 
 authservice = AuthService(repo_sgn, repo_unsgn)
 
-# authservice.sign_in(user1)
+#authservice.sign_in(user1)
 authservice.current_user(user2)
 
 if authservice.is_authorized(user1):
