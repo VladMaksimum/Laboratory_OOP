@@ -59,14 +59,14 @@ class KeyboardStateSaver:
     def save(self, obj: Any) -> None:
         try:
             with open(STATE_SAVE_FILE, "w") as file:
-                json.dump(obj, file, default=self._serializer._encode)
+                json.dump(obj, file, default=self._serializer._encode, indent=4)
         except:
             pass
     
     def load(self) -> Any:
         try:
             with open(STATE_SAVE_FILE) as file:
-                return json.load(file, object_hook=self._serializer._decode)
+                return json.load(file, object_hook=self._serializer._decode, indent=4)
         except:
             pass
 
