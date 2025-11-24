@@ -11,6 +11,7 @@ class DataRepository(Generic[T], IDataRepository[T]):
         self._rep_path = rep_path
         self._data_type = data_type
 
+
     def get_all(self) -> Sequence[T]:
         folder  = Path(self._rep_path)
         data = []
@@ -22,7 +23,7 @@ class DataRepository(Generic[T], IDataRepository[T]):
         
         return data
 
-    
+
     def get_by_id(self, id: int) -> T | None:
         data = self.get_all()
 
@@ -32,18 +33,24 @@ class DataRepository(Generic[T], IDataRepository[T]):
         
         return None
 
-    def add(self, item: T) -> None:
-        new_file = self._rep_path + "/data" + str(item.id) + ".json"
 
+    def add(self, item: T) -> None:
+        new_file = self.file_by_id(item.id)
         Path(new_file).touch()
-        json.dump(item.__dict__, open(new_file, "w"), indent=4)
         
-    
+        json.dump(item.__dict__, open(self.file_by_id(item.id), 'w'), indent=4)
+
+
     def update(self, item: T) -> None:
-        item_file = self._rep_path + "/data" + str(item.id) + ".json"
-        json.dump(item.__dict__, open(item_file, "w"), indent=4)
+        if self.get_by_id(item) != None:
+            json.dump(item.__dict__, open(self.file_by_id(item.id), 'w'), indent=4)
+        
 
     def delete(self, item: T) -> None:
-        Path.unlink(self._rep_path + "/data" + str(item.id) + ".json")
+        Path.unlink(self.file_by_id(item.id))
+    
+
+    def file_by_id(self, id: int) -> str:
+        return self._rep_path + "/data" + str(id) + ".json"
 
     
