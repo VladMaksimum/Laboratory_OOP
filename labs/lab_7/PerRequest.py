@@ -3,7 +3,7 @@ from typing import Any
 
 
 class PerRequest(LifeStyle):
-    def create_instance(self, interface_type: type, params: dict[str, Any] | None = None) -> Any:
+    def create_instance(self, params: dict[str, Any] | None = None) -> Any:
         if self._params == []:
             return self._class_type()
 
