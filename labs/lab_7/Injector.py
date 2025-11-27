@@ -12,10 +12,13 @@ class Injector:
         self._depdencies[interface_type] = lifestyle_type(class_type, params)
     
     def get_instance(self, interface_type: type, params: dict[str, Any] | None = None) -> Any:
-        if callable(self._depdencies[interface_type]):
-            return self._depdencies[interface_type]()
-        
-        return self._depdencies[interface_type].create_instance(params)
+        if interface_type in self._depdencies.keys():
+            if callable(self._depdencies[interface_type]):
+                return self._depdencies[interface_type]()
+            
+            return self._depdencies[interface_type].create_instance(params)
+        else:
+            print("Interface not registered")
     
     def register_fabric(self, interface_type: type, fabric_method: Callable) -> None:
         self._depdencies[interface_type] = fabric_method

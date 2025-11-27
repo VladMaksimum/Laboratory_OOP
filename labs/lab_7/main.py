@@ -36,3 +36,5 @@ print(f'Created {dep_inj_1.get_instance(Examples.MailService)} by dep_inj_1')
 with Scope(dep_inj_1):
     print(f'\nCreated {dep_inj_2.get_instance(Examples.MailService)} by dep_inj_2')
     print(f'Created {dep_inj_2.get_instance(Examples.MailService)} by dep_inj_2')
+
+dep_inj_1.get_instance(Examples.A)

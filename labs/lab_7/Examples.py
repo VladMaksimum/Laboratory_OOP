@@ -30,3 +30,7 @@ class ConsoleLogger(Logger):
 
 class FileLogger(Logger):
     ...
+
+
+class A:
+    ...

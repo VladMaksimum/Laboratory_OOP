@@ -8,8 +8,9 @@ repo_out = UserRepository("labs/lab_5/users_inactive")
 
 auth_service = AuthService(repo_in, repo_out)
 
-#auth_service.sign_in(user1)
-#auth_service.sign_out(user1)
+#auth_service.sign_up(user1)
+auth_service.sign_out(user1)
+auth_service.sign_in(user1)
 
-if auth_service.is_authorized(user1):
-    print("Hello again")
+#if auth_service.is_authorized(user1):
+#    print("Hello again")
