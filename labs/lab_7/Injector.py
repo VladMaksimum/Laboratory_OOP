@@ -18,7 +18,7 @@ class Injector:
             
             return self._depdencies[interface_type].create_instance(params)
         else:
-            print("Interface not registered")
+            raise Exception(f"Interface {interface_type.__name__} not registered")
     
     def register_fabric(self, interface_type: type, fabric_method: Callable) -> None:
         self._depdencies[interface_type] = fabric_method
