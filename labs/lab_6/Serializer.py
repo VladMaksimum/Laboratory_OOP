@@ -7,6 +7,9 @@ from VolumeDownCommand import VolumeDownCommand
 from MediaPlayerCommand import MediaPlayerCommand
 import json
 
+# здесь класс по-хорошему не должен знать список комманд, т е лучше сделать без фабрики комманд
+# Верещагин в этот файл не заглядывал у меня, но у других эту проблему обращал внимание и отправлял на переделку
+
 class Serializer:
     @classmethod
     def _encode(self, obj: object) -> Dict[str, Any]:

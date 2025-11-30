@@ -5,6 +5,8 @@ from PropertyChangedEventHandler import PropetryChangedEventHandler
 from PropertyChangingEventArgs import PropertyChangingEventArgs
 from PropertyChangingEventHandler import PropertyChangingEventHandler
 
+# пользоваться event примерно так надо, из вне подключая хэндлеров. примерочные классы можно любые задать
+
 handler1 = PropetryChangedEventHandler()
 handler2 = PropertyChangingEventHandler()
 

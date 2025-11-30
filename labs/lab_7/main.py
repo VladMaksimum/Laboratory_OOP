@@ -5,6 +5,10 @@ from Scoped import Scoped
 from Singleton import Singleton
 from Scope import Scope
 
+# сначала неправильно понял как должен работать инжектор, поэтому желательно переделать так, чтобы при регистрации
+# передалвался сразу словарь значений парметров, а не при создании экземпляра. в целом у меня он такую реализацию принял
+# но за других не ручаюсь
+
 dep_inj_1 = Injector()
 dep_inj_1.register(Examples.Database, Examples.SQLDB, PerRequest, params=["connection_str"])
 dep_inj_1.register(Examples.Logger, Examples.FileLogger, Singleton)

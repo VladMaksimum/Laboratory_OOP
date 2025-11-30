@@ -2,6 +2,8 @@ from AngleRange import AngleRange
 from Angle import Angle
 import math
 
+# к этой лабе у Верещагина вроде вопросов осбо не было так что можно считать без помарок
+
 print("Angle tests:")
 
 angle1 = Angle(math.pi/6)

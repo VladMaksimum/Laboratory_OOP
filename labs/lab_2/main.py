@@ -1,6 +1,8 @@
 from Printer import Printer
 from Colors import Colors
 
+# тут в прринципе тоже всё, что просили поправить, поправил
+
 with Printer(color=Colors.RED, position=(5,5), symbol="#", font_path="labs/lab_2/big_fonts.txt", interletters_space=5) as printer:
     printer.print("Hello")
     printer.print("hi")

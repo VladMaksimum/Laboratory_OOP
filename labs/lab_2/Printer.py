@@ -61,7 +61,7 @@ class Printer:
             if is_first:
                 for i in range(height):
                     if letter == " ":
-                        lines[i + position[1]] += (' ' * height)
+                        lines[i + position[1]] += (' ' * height) # типа пробел
                         continue
                     lines[i + position[1]] += (' ' * (position[0]) + color.value + spec_letters[ord(letter) - FIRST_LETTER_ASCII_CODE][i][:-1:] \
                         + " " * interletters_space + Colors.DEFAULT.value)

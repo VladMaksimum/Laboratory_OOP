@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Colors(Enum):
-    RED = '\x1b[31m'
+    RED = '\x1b[31m' # ansi запросы
     GREEN = '\x1b[32m'
     BLUE = '\x1b[34m'
     BLACK = '\x1b[30m'

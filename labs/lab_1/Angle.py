@@ -1,7 +1,6 @@
 import math
-from decimal import Decimal
 
-delta = 13
+delta = 13 # погрешность
 
 class Angle:
 
